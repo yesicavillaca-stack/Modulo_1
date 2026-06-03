@@ -1,0 +1,83 @@
+---
+title: 'Comparativa de Algoritmos: Fibonacci'
+author: "Alpha"
+date: "2026-04-15"
+output:
+  ioslides_presentation: default
+  beamer_presentation:
+    incremental: true
+  slidy_presentation:
+    incremental: true
+    footer: "Algoritmos y Estructuras de Datos - 2026"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+## Ejercicio 7
+Ejercicio: Comparativa de Algoritmos Fibonacci
+En este apartado se evalúa la eficiencia de dos paradigmas de programación: la **recursividad** y la **iteración**, midiendo los tiempos de ejecución mediante la función `Sys.time()`.
+# ¿Que es fubonacci?
+# Sucesión infinita de números naturales
+```{r}
+knitr::include_graphics("Fibonnaci.jpeg")
+```
+## 1. Método Recursivo
+
+Este método define la serie basándose en la recursión de la función, lo cual resulta en una estructura de árbol de llamadas.
+
+## 2. Metodo iterativo
+
+El método iterativo es un enfoque de programación que utiliza estructuras de repetición (bucles como for, while o repeat) para ejecutar un conjunto de instrucciones de manera cíclica hasta que se cumpla una condición específica.
+
+¿Cuantas iteraciones se necesitan para generar un número de la serie mayor que 1.000.000?
+
+## El código del programa
+
+```{r}
+# --- MÉTODO RECURSIVO ---
+inicio_fibonaccir <- Sys.time()
+
+fibonacci_recursivo <- function(n) {
+  if (n <= 1) return(n)
+  else return(fibonacci_recursivo(n - 1) + fibonacci_recursivo(n - 2))
+}
+
+n_rec <- 0
+resultado_rec <- 0
+while (resultado_rec <= 1000000) {
+  n_rec <- n_rec + 1
+  resultado_rec <- fibonacci_recursivo(n_rec)
+}
+final_fibonaccir <- Sys.time()
+tiempo_fibonaccir <- final_fibonaccir - inicio_fibonaccir
+```
+
+```{r}
+# --- MÉTODO ITERATIVO ---
+inicio_fibonaccit <- Sys.time()
+a <- 0; b <- 1; iteraciones <- 0
+
+while (b <= 1000000) {
+  siguiente <- a + b
+  a <- b
+  b <- siguiente
+  iteraciones <- iteraciones + 1
+}
+final_fibonaccit <- Sys.time()
+tiempo_fibonaccit <- final_fibonaccit - inicio_fibonaccit
+```
+
+## REPORTE DE SALIDA
+
+```{r}
+
+cat("MÉTODO RECURSIVO:\n")
+cat("- Posición (n):", n_rec, " | Tiempo:", round(as.numeric(tiempo_fibonaccir), 4), "seg\n\n")
+
+cat("MÉTODO ITERATIVO:\n")
+cat("- Iteraciones:", iteraciones, " | Tiempo:", round(as.numeric(tiempo_fibonaccit), 4), "seg\n\n")
+
+cat("CONCLUSIÓN:\n")
+cat("El método iterativo es", round(as.numeric(tiempo_fibonaccir)/as.numeric(tiempo_fibonaccit), 0), "veces más rápido.")
+```
